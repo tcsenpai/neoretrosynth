@@ -11,6 +11,10 @@ pyxel.COLOR_NEON_YELLOW = 10
 
 class NeoRetroSynth:
     def __init__(self):
+        """
+        Initialize the NeoRetroSynth.
+        Sets up the Pyxel environment, initializes variables, and starts the application.
+        """
         pyxel.init(360, 360, title="NeoRetro Synth - Cyberpunk Edition")
         self.current_octave = 2
         self.loop_recording = False
@@ -56,6 +60,10 @@ class NeoRetroSynth:
         pyxel.run(self.update, self.draw)
 
     def setup_sounds(self):
+        """
+        Set up the sound bank for the synthesizer.
+        Configures sounds for different notes, octaves, and drum sounds.
+        """
         notes = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"]
         for octave in range(0, 5):  # 5 octaves, 0-4
             for i, note in enumerate(notes):
@@ -83,6 +91,10 @@ class NeoRetroSynth:
         pyxel.sounds[63].set("C#4", "N", "7", "S", 10)  # Hi-hat open
 
     def update(self):
+        """
+        Update game state.
+        Handles user input and updates the synthesizer state each frame.
+        """
         if pyxel.btnp(pyxel.KEY_Q):
             pyxel.quit()
 
@@ -104,6 +116,10 @@ class NeoRetroSynth:
             self.toggle_arpeggiator()
 
     def handle_keyboard_input(self):
+        """
+        Handle keyboard input for playing notes.
+        Detects key presses and plays corresponding notes or arpeggiator patterns.
+        """
         keys = [
             pyxel.KEY_Z, pyxel.KEY_S, pyxel.KEY_X, pyxel.KEY_D, 
             pyxel.KEY_C, pyxel.KEY_V, pyxel.KEY_G, pyxel.KEY_B, 
@@ -124,6 +140,10 @@ class NeoRetroSynth:
                         self.loop.append((0, note, self.current_octave, self.current_waveform))
                         
     def play_note(self, note, octave, waveform=None, velocity=100, duration=0.25, channel=0):
+        """
+        Play a single note.
+        Sets up and plays a note with the specified parameters.
+        """
         assert channel in [0, 1], f"Invalid channel: {channel}"
         note_name = self.synth_notes[note % 8]
         if note_name == "C+":
@@ -153,6 +173,10 @@ class NeoRetroSynth:
         pyxel.play(channel, sound_index, loop=False)
 
     def handle_loop_controls(self):
+        """
+        Handle controls for loop recording and playback.
+        Manages recording, playing, and clearing of loops.
+        """
         if pyxel.btnp(pyxel.KEY_R):
             self.loop_recording = not self.loop_recording
             if not self.loop_recording and self.loop:
@@ -171,6 +195,10 @@ class NeoRetroSynth:
                 pyxel.play(channel, sound)
 
     def handle_sound_controls(self):
+        """
+        Handle controls for sound parameters.
+        Manages octave, sound length, waveform, BPM, and volume controls.
+        """
         if pyxel.btnp(pyxel.KEY_UP) and self.current_octave < 4:
             self.current_octave += 1
         if pyxel.btnp(pyxel.KEY_DOWN) and self.current_octave > 1:
@@ -203,26 +231,48 @@ class NeoRetroSynth:
             self.increase_synth_volume()
 
     def increase_bpm(self):
+        """
+        Increase the beats per minute (BPM).
+        """
         self.bpm = min(self.bpm + 5, 300)  # Cap at 300 BPM
 
     def decrease_bpm(self):
+        """
+        Decrease the beats per minute (BPM).
+        """
         self.bpm = max(self.bpm - 5, 60)  # Minimum 60 BPM
 
     def increase_drum_volume(self):
+        """
+        Increase the drum volume.
+        """
         self.drum_volume = min(self.drum_volume + 1, 7)
         self.setup_sounds()
 
     def decrease_drum_volume(self):
+        """
+        Decrease the drum volume.
+        """
         self.drum_volume = max(self.drum_volume - 1, 0)
         self.setup_sounds()
 
     def increase_synth_volume(self):
+        """
+        Increase the synth volume.
+        """
         self.synth_volume = min(self.synth_volume + 1, 7)
 
     def decrease_synth_volume(self):
+        """
+        Decrease the synth volume.
+        """
         self.synth_volume = max(self.synth_volume - 1, 0)
 
     def handle_sequencer(self):
+        """
+        Handle sequencer playback and editing.
+        Manages sequencer playback, step progression, and pattern editing.
+        """
         if pyxel.btnp(pyxel.KEY_TAB):
             self.sequencer_playing = not self.sequencer_playing
             self.frame_count = 0  # Reset frame count when toggling sequencer
@@ -302,6 +352,10 @@ class NeoRetroSynth:
                 self.edit_mode = False
 
     def draw(self):
+        """
+        Draw the user interface.
+        Renders all visual elements of the synthesizer interface.
+        """
         pyxel.cls(0)
         self.draw_frame()
         self.draw_instructions()
@@ -312,12 +366,18 @@ class NeoRetroSynth:
         self.draw_edit_info()
 
     def draw_frame(self):
+        """
+        Draw the main frame of the interface.
+        """
         # Draw a cyberpunk-style frame
         pyxel.rectb(0, 0, 360, 360, pyxel.COLOR_NEON_BLUE)
         pyxel.rect(1, 1, 358, 10, pyxel.COLOR_NEON_PINK)
         pyxel.text(5, 4, "NeoRetro Synth - Cyberpunk Edition", pyxel.COLOR_BLACK)
 
     def draw_instructions(self):
+        """
+        Draw the instruction text for controls.
+        """
         pyxel.text(10, 20, "NeoRetro Synth Controls:", pyxel.COLOR_NEON_GREEN)
         instructions = [
             "Z-M: Synth (C2-C4)", "1-4: Drum sounds", "R: Toggle recording",
@@ -332,6 +392,9 @@ class NeoRetroSynth:
             pyxel.text(10 + (i // 10) * 180, 30 + (i % 10) * 10, instr, pyxel.COLOR_WHITE)
 
     def draw_status(self):
+        """
+        Draw the current status of the synthesizer.
+        """
         pyxel.text(10, 140, f"NeoRetro Status:", pyxel.COLOR_NEON_BLUE)
         status = [
             f"Octave: {self.current_octave}", f"Sound Length: {self.sound_length}",
@@ -344,11 +407,18 @@ class NeoRetroSynth:
             pyxel.text(10 + (i // 5) * 180, 150 + (i % 5) * 10, stat, pyxel.COLOR_YELLOW)
 
     def draw_volume_info(self):
+        """
+        Draw volume information for drums and synth.
+        """
         pyxel.text(10, 200, f"Drum Volume: {self.drum_volume}", pyxel.COLOR_WHITE)
         pyxel.text(120, 200, f"Synth Volume: {self.synth_volume}", pyxel.COLOR_WHITE)
         pyxel.text(230, 200, f"Sound Length: {self.sound_length}", pyxel.COLOR_WHITE)
 
     def draw_sequencer(self):
+        """
+        Draw the sequencer interface.
+        Renders drum and synth patterns, current steps, and edit position.
+        """
         for i in range(2):  # Draw drum sequencers
             drum_y = 220 + i * 30
             pyxel.text(10, drum_y, f"Drum {i+1} ({self.drum_lengths[i]}):", pyxel.COLOR_CYAN)
@@ -379,6 +449,9 @@ class NeoRetroSynth:
             pyxel.rectb(edit_x, edit_y, 8, 8, pyxel.COLOR_YELLOW)
 
     def draw_logo(self):
+        """
+        Draw the NeoRetro Synth logo.
+        """
         logo = [
             "  _   _             ____       _              ",
             " | \ | | ___  ___  |  _ \ ___ | |_ _ __ ___   ",
@@ -404,6 +477,9 @@ class NeoRetroSynth:
             pyxel.text(170, 340 + i * 8, line, pyxel.COLOR_NEON_YELLOW)
     
     def draw_edit_info(self):
+        """
+        Draw information about the current edit mode.
+        """
         if self.edit_mode:
             if self.edit_target < 2:
                 patterns = self.drum_patterns[self.edit_target]
@@ -422,6 +498,9 @@ class NeoRetroSynth:
             pyxel.text(10, 350, "E: Edit mode, T: Switch tracks", pyxel.COLOR_WHITE)
 
     def export_to_midi(self, filename="sequence.mid"):
+        """
+        Export the current sequence to a MIDI file.
+        """
         def write_var_length(value):
             result = bytearray()
             while value:
@@ -475,6 +554,9 @@ class NeoRetroSynth:
         print(f"MIDI file exported as {filename}")
     
     def export_to_wav(self, filename="sequence.wav", duration=2):
+        """
+        Export the current sequence to a WAV file.
+        """
         sample_rate = 44100
         t = np.linspace(0, duration, int(sample_rate * duration), False)
 
@@ -504,6 +586,9 @@ class NeoRetroSynth:
         print(f"WAV file exported as {filename}")
 
     def save_preset(self, name):
+        """
+        Save the current synthesizer settings as a preset.
+        """
         self.presets[name] = {
             'waveform': self.current_waveform,
             'drum_patterns': self.drum_patterns,
@@ -512,6 +597,9 @@ class NeoRetroSynth:
         print(f"Preset '{name}' saved")
 
     def load_preset(self, name):
+        """
+        Load a previously saved preset.
+        """
         if name in self.presets:
             preset = self.presets[name]
             self.current_waveform = preset['waveform']
@@ -523,15 +611,25 @@ class NeoRetroSynth:
             print(f"Preset '{name}' not found")
 
     def toggle_arpeggiator(self):
+        """
+        Toggle the arpeggiator on or off.
+        """
         self.arpeggiator_on = not self.arpeggiator_on
         print(f"Arpeggiator {'ON' if self.arpeggiator_on else 'OFF'}")
 
     def apply_arpeggiator(self, note):
+        """
+        Apply the arpeggiator pattern to a given note.
+        """
         if self.arpeggiator_on:
             return [note + offset for offset in self.arp_pattern]
         return [note]
 
     def handle_drum_input(self):
+        """
+        Handle input for playing drum sounds.
+        Detects key presses for drum sounds and plays them.
+        """
         drum_keys = [pyxel.KEY_1, pyxel.KEY_2, pyxel.KEY_3, pyxel.KEY_4]
         for i, key in enumerate(drum_keys):
             if pyxel.btnp(key):
