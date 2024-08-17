@@ -11,11 +11,15 @@ This project is created for fun and educational purposes. As with any experiment
 ## Installation
 
 Clone the repository with 
-`git clone https://github.com/tcsenpai/neoretro-synth.git`
+
+`git clone https://github.com/tcsenpai/neoretrosynth.git`
 
 Then 
-`cd neoretro-synth`
-`pip install -r requirements.txt`
+
+```
+cd neoretrosynth
+pip install -r requirements.txt
+```
 
 Now you can run the application with 
 `python main.py`
