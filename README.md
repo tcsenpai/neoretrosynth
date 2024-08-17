@@ -2,6 +2,10 @@
 
 NeoRetro Synth is a retro-style synthesizer and drum machine with a cyberpunk aesthetic, built using the Pyxel library for Python.
 
+## Disclaimer
+
+This project is created for fun and educational purposes. As with any experimental software, bugs and unexpected behavior may occur. Use at your own risk and enjoy the creative process!
+
 ## Installation
 
 Clone the repository with 
@@ -92,3 +96,12 @@ All controls are displayed in the GUI for easy reference. Key features include:
 ## Usage
 
 Run the `main.py` file to start the NeoRetro Synth application. Use the on-screen controls or keyboard shortcuts to create and manipulate sounds and sequences.
+
+
+## License
+
+NeoRetro Synth is released under the DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE (WTFPL), Version 2, December 2004. This means you are free to do whatever you want with this software.
+
+For the full license text, please see the [LICENSE.md](LICENSE.md) file or visit [http://www.wtfpl.net/](http://www.wtfpl.net/) for more information.
+
+Copyright (C) 2024 tcsenpai <tcsenpai@discus.sh>
