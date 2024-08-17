@@ -2,6 +2,8 @@
 
 NeoRetro Synth is a retro-style synthesizer and drum machine with a cyberpunk aesthetic, built using the Pyxel library for Python.
 
+![NeoRetro Synth Screenshot](screenshot.png)
+
 ## Disclaimer
 
 This project is created for fun and educational purposes. As with any experimental software, bugs and unexpected behavior may occur. Use at your own risk and enjoy the creative process!
